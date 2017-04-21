@@ -19,7 +19,9 @@
 1. 安装
 
     `$ git clone git@github.com:incrediblejustin/lsd.git`
+    
     `$ cd lsd_server`
+    
     `$ make`
 
 2. 使用
