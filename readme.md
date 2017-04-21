@@ -14,7 +14,7 @@
 
 - 使用 **多线程** 作为主要逻辑处理单元
 
-###2. 服务器的安装与使用
+### 2. 服务器的安装与使用
 
 1. 安装
 
@@ -32,7 +32,7 @@
 
     - `libevent`, `mysql-server`, `mysql-client`, `libmysqlclient-dev`, `memcached`, `libmemcached-dev`, `jsoncpp`
 
-###3. 客户端应用程序编程接口的使用
+### 3. 客户端应用程序编程接口的使用
 
 1. 安装
 
