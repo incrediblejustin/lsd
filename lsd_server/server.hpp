@@ -25,6 +25,8 @@ public:
     {
         event_base_free(reactor);
         delete listen_server;
+        delete pool;
+        delete mysql;
     }
 
     static Server *get_server(const char *ip = NULL, 
@@ -33,7 +35,7 @@ public:
         return self == NULL ? (self = new Server(ip, port)) : self;
     }
 
-    Server *halt_server()
+    void halt_server()
     {
         if(self != NULL)
         {
@@ -48,15 +50,23 @@ public:
         json_parse.get_listen_arg(arg);
         return new TcpListen(arg);
     }
-    void  init_tcplisten(const char *ip = NULL, const short port = 0)
+    void  init_tcplisten(const char *ip = NULL, short port = 0)
     {
         if(ip == NULL || port == 0)
         {
-            if(!(listen_server = init_tcplisten_from_conf()))
+            listen_server = init_tcplisten_from_conf();
+        }
+        if(listen_server == NULL)
+        {
+            if(ip == NULL || port ==0)
             {
-                ListenArg listen_arg = {"127.0.0.1", 9877};
-                listen_server = new TcpListen(listen_arg);
+                ip = "127.0.0.1";
+                port = 9877;
             }
+            ListenArg listen_arg;
+            strcpy(listen_arg.listen_ip, ip);
+            listen_arg.listen_port = port;
+            listen_server = new TcpListen(listen_arg);
         }
         if(listen_server == NULL)
             err_moudle("tcplisten moudle");
@@ -139,7 +149,7 @@ private:
 
 
         cout << "prepare for libevent ..." << '\n';
-        reactor = event_init();
+        init_libevent();
         cout << "libevent start success ..." << '\n';
         cout << "-------------------------------------------------" << '\n';
         cout << "-------------lsd service start success-----------" << '\n';

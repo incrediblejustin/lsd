@@ -67,6 +67,7 @@ public:
             mysql_free_result(res);
         if(conn != NULL)
             mysql_close(conn);
+        delete memca;
     }
     
     bool query_from_memcached_login(const UserInfo& user)  
